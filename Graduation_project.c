@@ -1,5 +1,3 @@
-
-#include <conio.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include<string.h>
@@ -11,12 +9,13 @@ u32 random_bank_account_ID=1000000000;
 u16 random_bank_account_Password=10000;
 u32 automatic_bank_account_balance=75000;
 
+// Below the username and password that are used to access the admin window. make sure to use them correctly !
 
 u32 admin_usernmae=54321;
 u32 admin_password=1234;
 
 
-
+// Defining the struct node which contains all the account information data variables 
 struct node{
 
 	u8 bank_account_owner_name[40];
@@ -39,16 +38,16 @@ struct node * head = NULL;
 struct node *ptr;
 
 
-// Below the prototype of each function
+// Below the prototype of each used function
 
-struct node * Add_first_account(struct node * ,u8 [40],u8 [45], u8 [15], u16, u8 [15], u32, u16, u32, u16);
-struct node * Add_next_account(struct node * ,u8 [40],u8 [45], u8 [15], u16, u8 [15], u32, u16, u32, u16);
-struct node * createlist( struct node *);
-struct node * searchlist(struct node *ptr, u32 search_account_ID);
-void printAccounts(struct node *ptr);
+struct node * Add_first_account(struct node * ,u8 [40],u8 [45], u8 [15], u16, u8 [15], u32, u16, u32, u16); // Add first account function in the linked list 
+struct node * Add_next_account(struct node * ,u8 [40],u8 [45], u8 [15], u16, u8 [15], u32, u16, u32, u16); // Add next account function in the linked list 
+struct node * createlist( struct node *); // create list function in the linked list
+struct node * searchlist(struct node *ptr, u32 search_account_ID); // search list function for the linked list
+void printAccounts(struct node *ptr); // print account function for each account created in the linked list 
 
-void Admin_Window(void);
-void Client_Window(void);
+void Admin_Window(void); // Admin window function
+void Client_Window(void); // Client window function
 
 
 // Below the main function
@@ -70,35 +69,30 @@ printf("-------------------------------------------------------------------\n");
 
 while(1){
 
-		printf("\nChoose a window by entering (1) for admin and (2) for client (0) for exit: ");
+	printf("\nChoose a window by entering (1) for admin and (2) for client and (0) for exit: ");
 
-		int window_choice;
-		scanf("%d",&window_choice);
-
-
-switch (window_choice)
-		{
-			case 1:
-			Admin_Window();
-			break;
-
-			case 2:
-			Client_Window();
-			break;
-
-			case 0:
-			return 0;
-
-			default:
-			printf("Wrong choice !\n");
-			break;
+	u32 window_choice; // defining window choice variable to take it as an input from the user
+	scanf("%d",&window_choice);
 
 
-		}
+	switch (window_choice){
+		
+		case 1:
+		Admin_Window(); // calling Admin Window Function
+		break;
+
+		case 2:
+		Client_Window(); // calling Client Window Function
+		break;
+
+		case 0:
+		return 0; // exiting the program
+
+		default:
+		printf("Wrong choice !\n"); // printing wrong choice if the input is not in any of the previous cases
+		break;}
 }
-
-
-	return 0;
+return 0;
 }
 
 
@@ -112,10 +106,9 @@ struct node * Add_first_account(struct node * head, u8 name[40],u8 address[45],u
 
 	strcpy(temp->bank_account_owner_name, name);
 	strcpy(temp->bank_account_owner_address, address);
-    strcpy(temp->bank_account_owner_national_ID, national_ID);
+   	strcpy(temp->bank_account_owner_national_ID, national_ID);
 	temp -> bank_account_owner_age = age;
 	strcpy(temp->bank_account_owner_guardian_ID, guardian_ID);
-
 	temp -> bank_account_balance = balance;
 	temp -> bank_account_status= status;
 	temp -> bank_account_ID= random_bank_account_ID;
@@ -137,11 +130,10 @@ struct node * Add_next_account(struct node * head ,u8 name[40],u8 address[45],u8
 
 	strcpy(temp->bank_account_owner_name, name);
 	strcpy(temp->bank_account_owner_address, address);
-    strcpy(temp->bank_account_owner_national_ID, national_ID);
+    	strcpy(temp->bank_account_owner_national_ID, national_ID);
 	temp -> bank_account_owner_age = age;
 	strcpy(temp->bank_account_owner_guardian_ID, guardian_ID);
 	temp -> bank_account_balance = balance;
-
 	temp -> bank_account_status= status;
 	temp -> bank_account_ID= ++random_bank_account_ID;
 	temp -> bank_account_Password= ++random_bank_account_Password;
@@ -159,8 +151,8 @@ struct node * Add_next_account(struct node * head ,u8 name[40],u8 address[45],u8
 	return head;
 }
 
-struct node * createlist(struct node * head)
-{
+struct node * createlist(struct node * head){
+	
 	u32 n,j;
 	u8 name[40];
 	u8 address[45];
@@ -190,25 +182,21 @@ struct node * createlist(struct node * head)
 	printf("Enter address: ");
 	scanf(" %[^\n]%*c",&address);
 
-
 	printf("Age: ");
 	scanf("%d",&age);
 
-    while (age <=0 || age>100)
-	{
-    printf("\nAge is not Valid !\n");
+    while (age <=0 || age>100){
+   	 
+	printf("\nAge is not Valid !\n");
 	printf("\nAge: ");
-	scanf("%d",&age);
-	}
+	scanf("%d",&age);}
 
-	if(age <21)
-	{
-    printf("Enter your guardian national ID: ");
-    scanf(" %[^\n]%*c",&guardian_ID);
-	}
+	if(age <21){
+    
+	printf("Enter your guardian national ID: ");
+    	scanf(" %[^\n]%*c",&guardian_ID);}
 	else{
-        strcpy(guardian_ID, "0000000000000");
-	}
+        strcpy(guardian_ID, "0000000000000");}
 
 
 	head = Add_first_account(head, name, address, national_ID , age, guardian_ID , balance , status , accID, accPassword);
@@ -226,28 +214,20 @@ struct node * createlist(struct node * head)
 	printf("Enter address: ");
 	scanf(" %[^\n]%*c",&address);
 
-
-
 	printf("Age: ");
-
 	scanf("%d",&age);
 
-
-	while (age <=0 || age>100)
-	{
-    printf("\nAge is not Valid !\n");
+	while (age <=0 || age>100){
+    	
+	printf("\nAge is not Valid !\n");
 	printf("\nAge: ");
-	scanf("%d",&age);
-	}
+	scanf("%d",&age);}
 
-	if(age <21)
-	{
-    printf("Enter your guardian national ID: ");
-    scanf(" %[^\n]%*c",&guardian_ID);
-	}
+	if(age <21){
+    	printf("Enter your guardian national ID: ");
+    	scanf(" %[^\n]%*c",&guardian_ID);}
 	else{
-        strcpy(guardian_ID, "0000000000000");
-	}
+        strcpy(guardian_ID, "0000000000000");}
 
 
 	head = Add_next_account(head,name,address,national_ID,age,guardian_ID,balance, status, accID,accPassword);
@@ -260,58 +240,54 @@ struct node * createlist(struct node * head)
 struct node * searchlist(struct node *ptr, u32 search_account_ID){
 	struct node *search = ptr;
 	while(search!=NULL){
-		if(search-> bank_account_ID == search_account_ID){
-			printf("Found\n");
-			return search;
-		}else{
-			search= search->next;
-		}
+	if(search-> bank_account_ID == search_account_ID){
+	printf("This Bank account exists\n");
+	return search;}
+	else{
+	search= search->next;}
 	}
 	return NULL;
 }
 
 void printAccounts(struct node *ptr){
 
-		while(ptr != NULL)
+	while(ptr != NULL){
+	
+	printf("\nAccounts Informtion: \n");
+	printf("Name= %s",ptr -> bank_account_owner_name);
+	printf("\n");
+	printf("Adress= %s",ptr -> bank_account_owner_address);
+	printf("\nNational ID= %ld\n",ptr -> bank_account_owner_national_ID);
+	printf("Age= %d\n",ptr -> bank_account_owner_age);
+	printf("Balance= %d\n",ptr -> bank_account_balance);
 
-	 {
-		printf("\nAccounts Informtion: \n");
-		printf("Name= %s",ptr -> bank_account_owner_name);
-		printf("\n");
-		printf("Adress= %s",ptr -> bank_account_owner_address);
-		printf("\nNational ID= %ld\n",ptr -> bank_account_owner_national_ID);
-		printf("Age= %d\n",ptr -> bank_account_owner_age);
-		printf("Balance= %d\n",ptr -> bank_account_balance);
-
-		if (ptr -> bank_account_status == 1)
+	if (ptr -> bank_account_status == 1)
 		{printf("Account Status= Active\n");}
-		else if (ptr -> bank_account_status == 2)
+	else if (ptr -> bank_account_status == 2)
 		{printf("Account Status= Restricted\n");}
-		else
+	else
 		{printf("Account Status= Closed\n");}
 
-		printf("Guardian National ID= %s\n",ptr -> bank_account_owner_guardian_ID);
-		printf("Account ID= %ld\n",ptr -> bank_account_ID);
-		printf("Account Password= %d\n",ptr -> bank_account_Password);
+	printf("Guardian National ID= %s\n",ptr -> bank_account_owner_guardian_ID);
+	printf("Account ID= %ld\n",ptr -> bank_account_ID);
+	printf("Account Password= %d\n",ptr -> bank_account_Password);
 
-		ptr = ptr -> next;
+	ptr = ptr -> next;
 	}
 
 }
 
 
-// Below the implementation of Admin window functions
+// Below the implementation of Admin window function
 
 void Admin_Window(void)
 {
-
-
-	u32 flag3=1;
+	u32 flag3=1; // Defining flag to exit while loop
 
 	while(flag3){
 
-		u32 user_name;
-		u32 pass_word;
+		u32 user_name; // Defining username variable to check the admin's username
+		u32 pass_word; // Defining password variable to check the admin's password
 
 		u32 flagg=1;
 
@@ -324,209 +300,199 @@ void Admin_Window(void)
 		scanf("%d",&pass_word);
 
 
-			if(user_name == admin_usernmae && pass_word == admin_password){  // check the username and the password before open the window
+		if(user_name == admin_usernmae && pass_word == admin_password){  // check the username and the password before opening the admin window
 
-			system("cls");
+		system("cls"); // clearing the CMD screen 
 
-			flag3=0;
+		flag3=0;
 
-			while(flagg){
+		while(flagg){
 
+			printf("\nWelcome to the Admin Window !!\n");
+			printf("********************************\n");
+			printf("\nIn this window you can choose one of the following actions: \n");
+			printf("\nCreate a new account by entering 1\n");
+			printf("Open existing account by entering 2\n");
+			printf("Exit the window by entering 3\n");
 
-				printf("\nWelcome to the Admin Window !!\n");
-				printf("********************************\n");
-				printf("\nIn this window you can choose one of the following actions: \n");
-				printf("\nCreate a new account by entering 1\n");
-				printf("Open existing account by entering 2\n");
-				printf("Exit the window by entering 3\n");
+			printf("\nChoose an action: ");
+			u16 admin_action; // Defining a variable for admin actions
+			scanf("%d",&admin_action);
 
-				printf("\nChoose an action: ");
-				u16 admin_action;
-				scanf("%d",&admin_action);
+			switch (admin_action){
+						
+				case 1:     // option one : Create one or more account in the runtime using the linked list
+					
+				system("cls"); // clearing the CMD screen 
 
-				switch (admin_action)
-				{
-					case 1:     // option one : Create one or more new account in the runtime by the linked list
+				head=createlist(head);
+				ptr = head;
+				printAccounts(ptr);
+				break;
 
-					system("cls");
+				case 2:     // option two : Open existing account and make some actions
 
-					head=createlist(head);
-					ptr = head;
-					printAccounts(ptr);
-					break;
+				system("cls");
 
-					case 2:     // option two : Open existing account and make some operations
+				ptr =head;
+				u32 search_account_id;
+				printf("\nEnter a Baank Account ID to open: ");
+				scanf("%d",&search_account_id);
+				struct node * search = searchlist(ptr, search_account_id);
 
-					system("cls");
+				u32 flag=0;
 
-					ptr =head;
-					u32 search_account_id;
-					printf("\nEnter a Baank Account ID to open: ");
-					scanf("%d",&search_account_id);
-					struct node * search = searchlist(ptr, search_account_id);
+				while(flag==0){
 
-					u32 flag=0;
+					printf("\nYou can choose one of the following actions: \n");
+					printf("\nMake a transaction by entering 1\n");
+					printf("Change the account's status by entering 2\n");
+					printf("Withdraw cash by entering 3\n");
+					printf("Deposit in account by entering 4\n");
+					printf("Return to the main menu by entering 5\n");
 
-					 while(flag==0){
+					printf("\nEnter an action: ");
 
-									printf("\nYou can choose one of the following actions: \n");
-									printf("\nMake a transaction by entering 1\n");
-									printf("Change the account's status by entering 2\n");
-									printf("Withdraw cash by entering 3\n");
-									printf("Deposit in account by entering 4\n");
-									printf("Return to the main menu by entering 5\n");
-
-
-								printf("\nEnter an action: ");
-
-								u32 exist_account_action;
-								u32 second_account_ID;
-								scanf("%d",&exist_account_action);
+					u32 exist_account_action; // Defining a variable to let the user make an action on any existing account
+					u32 second_account_ID; // Defining a variable to search through the linked list
+					scanf("%d",&exist_account_action);
 
 
-								switch (exist_account_action){
+						switch (exist_account_action){
 
-									case 1:     // Make a transaction between the opened account and another account
+							case 1:     // Make a transaction between the opened account and another account
 
-										system("cls");
+							system("cls"); // clearing the CMD screen 
 
-										printf("\nEnter the second account's ID to search: ");
-										scanf("%d",&second_account_ID);
-										struct node * search_2 = searchlist(ptr, second_account_ID);
+							rintf("\nEnter the second account's ID to search: ");
+							scanf("%d",&second_account_ID);
+							struct node * search_2 = searchlist(ptr, second_account_ID);
 
-										if (search -> bank_account_status == 1 && search_2 -> bank_account_status ==1)
-										{
-											u32 cash_amount;
-											printf("Enter the amount of cash you want to transfer: ");
-											scanf("%d",&cash_amount);
+							if (search -> bank_account_status == 1 && search_2 -> bank_account_status ==1){
+											
+								u32 cash_amount;
+								printf("Enter the amount of cash you want to transfer: ");
+								scanf("%d",&cash_amount);
 
-											if(cash_amount <= search -> bank_account_balance)
+									if(cash_amount <= search -> bank_account_balance)
 
-											{search -> bank_account_balance = search -> bank_account_balance - cash_amount;
+									{search -> bank_account_balance = search -> bank_account_balance - cash_amount;
+									search_2 -> bank_account_balance = search_2 -> bank_account_balance + cash_amount;
 
-											search_2 -> bank_account_balance = search_2 -> bank_account_balance + cash_amount;
-
-											printf("Cash withdraw was done successfully!\n");
-											printf("Your current balance now= %d\n",search -> bank_account_balance);}
+									printf("Cash withdraw was done successfully!\n");
+									printf("Your current balance now= %d\n",search -> bank_account_balance);}
 
 
-											else
-											{printf("Your account balance is not enough to complete this withdraw!\n");}
-										}
+									else
+									{printf("Your account balance is not enough to complete this withdraw!\n");}
+									}
 
-										else
-										{printf("The transaction can not be dont because the status of one or both accounts not active\n");}
+									else
+									{printf("The transaction can not be dont because the status of one or both accounts not active\n");}
 
-										break;
+									break;
 
-									case 2:     // Change the account's status of the opened account
+							case 2:     // Change the account's status of the opened account
 
-									system("cls");
+							system("cls"); // clearing the CMD screen 
 
-										if (search -> bank_account_status == 1){
-											printf("Account Status: Active\n");}
+								if (search -> bank_account_status == 1){
+								printf("Account Status: Active\n");}
 
-										else if(search -> bank_account_status == 2){
-											printf("Account Current Status= Restricted\n");}
-										else{
-											printf("Account Current Status= Closed\n");}
+								else if(search -> bank_account_status == 2){
+								printf("Account Current Status= Restricted\n");}
+								else{printf("Account Current Status= Closed\n");}
 
-										printf("\nYou can change the current status by choosing one from the following : \n");
-										printf("Make it Active by entering 1 \n");
-										printf("Make it Restricted by entering 2 \n");
-										printf("Make it Closed by entering 3 \n");
+								printf("\nYou can change the current status by choosing one from the following : \n");
+								printf("Make it Active by entering 1 \n");
+								printf("Make it Restricted by entering 2 \n");
+								printf("Make it Closed by entering 3 \n");
 
-										u32 new_status;
-										scanf("%d",&new_status);
-										search -> bank_account_status = new_status;
-										printf("\nBank Account Status changed successfully\n");
+								u32 new_status;
+								scanf("%d",&new_status);
+								search -> bank_account_status = new_status;
+								printf("\nBank Account Status changed successfully\n");
 
-										if (search -> bank_account_status == 1){
-											printf("\nBank Account Status= Active\n");}
-										else if(search -> bank_account_status == 2){
-											printf("Bank Account Current Status= Restricted\n");}
-										else{
-											printf("Bank Account Current Status= Closed\n");}
+								if (search -> bank_account_status == 1){
+									printf("\nBank Account Status= Active\n");}
+								else if(search -> bank_account_status == 2){
+									printf("Bank Account Current Status= Restricted\n");}
+								else{printf("Bank Account Current Status= Closed\n");}
+								break;
 
-										break;
+							case 3:     //Withdraw cash from the account
 
-									case 3:     //Withdraw cash from the opened account
+							system("cls"); //Clearing CMD screen
 
-									system("cls");
+								if (search -> bank_account_status == 1){
+									
+								u32 cash_amount_1;
+								printf("Enter the amount of cash you want to withdraw: ");
+								scanf("%d",&cash_amount_1);
 
-										if (search -> bank_account_status == 1)
-										{
-											u32 cash_amount_1;
-											printf("Enter the amount of cash you want to withdraw: ");
-											scanf("%d",&cash_amount_1);
+								if(cash_amount_1 <= search -> bank_account_balance){
+									
+								search -> bank_account_balance = search -> bank_account_balance - cash_amount_1;
+								printf("Cash withdraw was done successfully!\n");
+								printf("Your current balance now= %d\n",search -> bank_account_balance);}
 
-												if(cash_amount_1 <= search -> bank_account_balance)
-												{
-													search -> bank_account_balance = search -> bank_account_balance - cash_amount_1;
-
-													printf("Cash withdraw was done successfully!\n");
-													printf("Your current balance now= %d\n",search -> bank_account_balance);
-												}
-
-												else
-												{printf("Your account balance is not enough to complete this withdraw!\n");}
-										}
-										else if (search -> bank_account_status == 2)
-										{printf("This action can not be done because your account status is Restricted!\n");}
-
-										else
-										{printf("This action can not be done because your account status is Closed!\n");}
-
-										break;
-
-									case 4:     //Deposit in the opened account
-
-									system("cls");
-
-										if (search -> bank_account_status= 1)
-											{
-												u32 cash_amount_2;
-												printf("Enter the amount of cash you want to deposit: ");
-												scanf("%d",&cash_amount_2);
-
-													search -> bank_account_balance = search -> bank_account_balance + cash_amount_2;
-
-													printf("Cash deposit was done successfully!\n");
-													printf("Your current balance now= %d\n",search -> bank_account_balance);
-												}
-
-										else if (search -> bank_account_status == 2)
-										{printf("This action can not be done because your account status is Restricted!\n");}
-
-										else
-										{printf("This action can not be done because your account status is Closed!\n");}
-										break;
-
-									case 5:     // Exit from this account and back to Admin window
-										flag=1;
-										break;
-
-									default:
-										printf("Wrong choice ! \n");
-										break;
-
+								else
+								{printf("Your account balance is not enough to complete this withdraw!\n");}
 								}
+								else if (search -> bank_account_status == 2)
+								{printf("This action can not be done because your account status is Restricted!\n");}
+
+								else
+								{printf("This action can not be done because your account status is Closed!\n");}
+								break;
+
+							case 4:     //Deposit cash in the account
+
+							system("cls"); // Clearing CMD screen
+
+							if (search -> bank_account_status= 1){
+							
+							u32 cash_amount_2;
+							printf("Enter the amount of cash you want to deposit: ");
+							scanf("%d",&cash_amount_2);
+
+						        search -> bank_account_balance = search -> bank_account_balance + cash_amount_2;
+
+							printf("Cash deposit was done successfully!\n");
+							printf("Your current balance now= %d\n",search -> bank_account_balance);}
+
+							else if (search -> bank_account_status == 2)
+							{printf("This action can not be done because your account status is Restricted!\n");}
+
+							else
+							{printf("This action can not be done because your account status is Closed!\n");}
+							break;
+
+							case 5:     // Exiting from the account and returning back to Admin window
+							flag=1;
+							break;
+
+							default:
+							printf("Wrong choice ! \n"); // In case if the user entered a wrong choice
+							break;
+
+						}
 
 
 					}
 
-					case 3:     // option three : Exit from Admin window and back to the main window
-					flagg=0;
-					break;
+				case 3:     // option three : Exit from Admin window and back to the main window
+				flagg=0;
+				break;
 
-					default:
-					printf("Wrong choice ! \n");
-					break;
-
-				}
+				default:
+				printf("Wrong choice ! \n");
+				break;
 
 				}
+
 			}
+		}
 
 
 			else
@@ -535,38 +501,36 @@ void Admin_Window(void)
 }
 
 
-// Below the implementation of Client window functions
+// Below the implementation of Client window function
 
 void Client_Window(void){
 
+	u32 flag4=1; // Defining a flag to exit from the while loop
 
-	u32 flag4=1;
+	while(flag4){
 
-		while(flag4){
-
-			printf("Enter your Bank Account ID: ");
-			u32 client_bank_account_ID;
-			scanf("%d",&client_bank_account_ID);
-			printf("Enter your Bank Account Password: ");
-			u32 client_bank_account_Password;
-			scanf("%d",&client_bank_account_Password);
+		printf("Enter your Bank Account ID: "); 
+		u32 client_bank_account_ID; // Defining the bank account ID variable
+		scanf("%d",&client_bank_account_ID);
+		printf("Enter your Bank Account Password: ");
+		u32 client_bank_account_Password; // Defining the bank account password variable
+		scanf("%d",&client_bank_account_Password);
 
 			ptr =head;
-			struct node * search = searchlist(ptr, client_bank_account_ID);
+			struct node * search = searchlist(ptr, client_bank_account_ID); // searching for the account using the ID
 
-			u32 client_bank_account_ID_2;
-			int flag2=1;
+			u32 client_bank_account_ID_2; // defining a variable to search inside the linked list
+			
+			int flag2=1; // Defining a flag to exit while loop
 
-				if( client_bank_account_ID == search -> bank_account_ID && client_bank_account_Password == search -> bank_account_Password){  // check of the account's data
-				flag4=0;
+			if( client_bank_account_ID == search -> bank_account_ID && client_bank_account_Password == search -> bank_account_Password){  // check of the account's data
+			flag4=0;
 
-				system("cls");
+			system("cls"); // Clearing CMD screen
 
 
 				while(flag2){
 				{
-
-
 					printf("\nWelcome to the Client Window !!\n");
 					printf("********************************\n");
 					printf("\nIn this window you can choose one of the following actions: \n");
@@ -577,26 +541,27 @@ void Client_Window(void){
 					printf("Return to the main menu by entering 5\n");
 
 
-			printf("\nChoose an action: ");
-			u32 client_action;
-			scanf("%d",&client_action);
+				printf("\nChoose an action: ");
+				u32 client_action; // defining a variable to choose from the client window actions
+				scanf("%d",&client_action);
 
 
-			switch (client_action){
+				switch (client_action){
 
 				case 1:     // option one : Make a transaction to another account
 
-				system("cls");
+				system("cls"); // Clearing CMD screen
 
-					printf("\nEnter the second account's ID to search: ");
-					scanf("%d",&client_bank_account_ID_2);
-					struct node * search_2 = searchlist(ptr, client_bank_account_ID_2);
+				printf("\nEnter the second account's ID to search: ");
+				scanf("%d",&client_bank_account_ID_2);
+				
+				struct node * search_2 = searchlist(ptr, client_bank_account_ID_2);
 
-					if (search -> bank_account_status == 1 && search_2 -> bank_account_status == 1){
+				if (search -> bank_account_status == 1 && search_2 -> bank_account_status == 1){
 
-						u32 cash_amount_3;
-						printf("Enter the amount of cash you want to transfer: ");
-						scanf("%d",&cash_amount_3);
+					u32 cash_amount_3;
+					printf("Enter the amount of cash you want to transfer: ");
+					scanf("%d",&cash_amount_3);
 
 					if(cash_amount_3 <= search -> bank_account_balance){
 					search -> bank_account_balance = search -> bank_account_balance - cash_amount_3;
@@ -604,7 +569,6 @@ void Client_Window(void){
 
 					printf("Cash withdraw was done successfully!\n");
 					printf("Your current balance now= %d\n",search -> bank_account_balance);}
-
 
 					else
 					{printf("Your account balance is not enough to complete this withdraw!\n");}}
@@ -614,20 +578,20 @@ void Client_Window(void){
 
 					break;
 
-				case 2:     // option two : Change the account's password
+				case 2:     // option two: Change the account's password
 
-				system("cls");
+				system("cls"); // clearing CMD screen
 
 					if (search -> bank_account_status == 1){
 
-						u32 new_bank_account_password;
+					u32 new_bank_account_password;
 
-						printf("\nEnter the new password: ");
-						scanf("%d",&new_bank_account_password);
+					printf("\nEnter the new password: ");
+					scanf("%d",&new_bank_account_password);
 
-						search -> bank_account_Password = new_bank_account_password;
+					search -> bank_account_Password = new_bank_account_password;
 
-						printf("Your Account Password was changed successfuly!\n");}
+					printf("Your Account Password was changed successfuly!\n");}
 
 					else if (search -> bank_account_status == 2)
 					{printf("This action can not be done because your account status is Restricted!\n");}
@@ -637,37 +601,37 @@ void Client_Window(void){
 
 					break;
 
-				case 3:     // option three : Get cash
+				case 3:     // option three: Get cash
 
-				system("cls");
+				system("cls"); // Clearing CMD screen
 
-					if (search -> bank_account_status == 1){
+				if (search -> bank_account_status == 1){
 
-						u32 cash_amount_4;
-						printf("Enter the amount of cash you want to withdraw: ");
-						scanf("%d",&cash_amount_4);
+					u32 cash_amount_4;
+					printf("Enter the amount of cash you want to withdraw: ");
+					scanf("%d",&cash_amount_4);
 
-							if(cash_amount_4 <= search -> bank_account_balance){
+						if(cash_amount_4 <= search -> bank_account_balance){
 
-								search -> bank_account_balance = search -> bank_account_balance - cash_amount_4;
+							search -> bank_account_balance = search -> bank_account_balance - cash_amount_4;
 
-								printf("Cash withdraw was done successfully!\n");
-								printf("Your current balance now= %d\n",search -> bank_account_balance);}
+							printf("Cash withdraw was done successfully!\n");
+							printf("Your current balance now= %d\n",search -> bank_account_balance);}
 
-							else
-							{printf("Your account balance is not enough to complete this withdraw!\n");}}
+						else
+						{printf("Your account balance is not enough to complete this withdraw!\n");}}
 
-					else if (search -> bank_account_status == 2)
+						else if (search -> bank_account_status == 2)
 						{printf("This action can not be done because your account status is Restricted!\n");}
 
-					else
+						else
 						{printf("This action can not be done because your account status is Closed!\n");}
 
-					break;
+				break;
 
-				case 4:     // option four : Deposit in account
+				case 4:     // option four: Deposit in account
 
-				system("cls");
+				system("cls"); // Clearing CMD screen
 
 					if (search -> bank_account_status == 1){
 
@@ -690,22 +654,22 @@ void Client_Window(void){
 
 				case 5:     // option five : Exit the client window and return to the main window
 
-				system("cls");
+				system("cls"); // Clearing CMD screen
 
 					flag2=0;
 					printf("The system is exiting from the client window");
 					break;
 
 				default:
-					printf("Wrong choice ! \n");
-					printf("The system is shutting down ! \n");
-					break;
+				printf("Wrong choice ! \n");
+				printf("The system is shutting down ! \n");
+				break;
 
 			}
-				}
+		}
 
-				}
-				}
+	}
+}
 
 		else
 			{printf("You entered a wrong username or password\n");}
