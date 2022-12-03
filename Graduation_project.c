@@ -364,7 +364,7 @@ void Admin_Window(void)
 
 							system("cls"); // clearing the CMD screen 
 
-							rintf("\nEnter the second account's ID to search: ");
+							printf("\nEnter the second account's ID to search: ");
 							scanf("%d",&second_account_ID);
 							struct node * search_2 = searchlist(ptr, second_account_ID);
 
