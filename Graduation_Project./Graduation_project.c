@@ -241,7 +241,6 @@ struct node * searchlist(struct node *ptr, u32 search_account_ID){
 	struct node *search = ptr;
 	while(search!=NULL){
 	if(search-> bank_account_ID == search_account_ID){
-	printf("This Bank account exists\n");
 	return search;}
 	else{
 	search= search->next;}
