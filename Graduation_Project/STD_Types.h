@@ -16,4 +16,3 @@ typedef double f64;
 
 
 #endif
-
